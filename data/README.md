@@ -1,11 +1,10 @@
 # Data Notes
 
 Included in this repo:
+- `Sales_Records.csv`
 - `cosmetics.json`
 - `groceries.json`
 
-Not included:
-- The original Task 1 relational sales CSV used for the PostgreSQL staging-table import
-
-Reason:
-- That CSV file was not present in the local D597 coursework archive, so the import SQL is preserved with a placeholder path and column mapping, but the raw source file is not bundled here.
+Notes:
+- `Sales_Records.csv` is the restored Task 1 relational source file used for the PostgreSQL staging-table import.
+- The file contains `100,000` rows and matches the column mapping used in `sql/03_load_from_staging.sql`.

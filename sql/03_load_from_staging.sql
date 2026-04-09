@@ -16,7 +16,7 @@ CREATE TABLE StagingTable (
     TotalProfit NUMERIC(15, 2)
 );
 
--- Replace the file path below with the actual Task 1 sales CSV location.
+-- Run this script from the repository root so the relative path below resolves correctly.
 \copy public.stagingtable (
     region,
     country,
@@ -32,7 +32,7 @@ CREATE TABLE StagingTable (
     totalrevenue,
     totalcost,
     totalprofit
-) FROM 'path/to/sales_records.csv'
+) FROM 'data/Sales_Records.csv'
 DELIMITER ','
 CSV HEADER
 QUOTE '"'

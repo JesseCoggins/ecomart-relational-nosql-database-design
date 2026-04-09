@@ -28,6 +28,7 @@ This repository packages work originally completed as part of Western Governors 
 - `mongo/02_import_commands.sh`
 - `mongo/03_queries.js`
 - `mongo/04_indexes_and_optimization.js`
+- `data/Sales_Records.csv`
 - `data/cosmetics.json`
 - `data/groceries.json`
 - `data/README.md`
@@ -48,8 +49,9 @@ The MongoDB design uses document collections for cosmetics and grocery transacti
 - query optimization with indexes and reduced scan patterns
 
 ## Data Notes
+- The PostgreSQL sales source file is now included as `data/Sales_Records.csv` with `100,000` transactional rows.
 - The two MongoDB JSON datasets are included in `data/`.
-- The original Task 1 relational sales CSV was not present in the local coursework archive, so the PostgreSQL import script is included with a placeholder source path rather than the raw CSV itself.
+- The staging-load SQL in `sql/03_load_from_staging.sql` points directly to `data/Sales_Records.csv` for a repo-local import path.
 
 ## Environment Notes
 - PostgreSQL was the target platform for the relational portion.
