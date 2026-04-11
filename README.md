@@ -8,7 +8,7 @@ This repo packages two database design projects built around the EcoMart scenari
 The goal was to show database design, data loading, query writing, and query optimization across both relational and non-relational systems.
 
 ## Coursework Context
-This repository packages work originally completed as part of Western Governors University's (WGU) M.S. in Data Analytics program and reorganizes it into a public portfolio format.
+This project was completed as part of my M.S. in Data Analytics program at Western Governors University (WGU).
 
 ## What This Repo Shows
 - normalized relational schema design in PostgreSQL
@@ -57,3 +57,7 @@ The MongoDB design uses document collections for cosmetics and grocery transacti
 - PostgreSQL was the target platform for the relational portion.
 - MongoDB shell and `mongoimport` were the target tools for the document-database portion.
 - No Python environment is required for this repo.
+
+---
+
+*\* I used Claude (Anthropic) to help organize and stage this coursework into a GitHub portfolio repository. The analysis, code, and results are entirely my own.*
