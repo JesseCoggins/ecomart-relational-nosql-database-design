@@ -57,7 +57,3 @@ The MongoDB design uses document collections for cosmetics and grocery transacti
 - PostgreSQL was the target platform for the relational portion.
 - MongoDB shell and `mongoimport` were the target tools for the document-database portion.
 - No Python environment is required for this repo.
-
----
-
-*\* I used Claude (Anthropic) to help organize and stage this coursework into a GitHub portfolio repository. The analysis, code, and results are entirely my own.*
