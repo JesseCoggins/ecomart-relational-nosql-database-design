@@ -7,8 +7,8 @@ This repo packages two database design projects built around the EcoMart scenari
 
 The goal was to show database design, data loading, query writing, and query optimization across both relational and non-relational systems.
 
-## Coursework Context
-This project was completed as part of my M.S. in Data Analytics program at Western Governors University (WGU).
+## Academic Context
+Completed during my M.S. in Data Analytics at Western Governors University (WGU), then packaged here as a public portfolio project.
 
 ## What This Repo Shows
 - normalized relational schema design in PostgreSQL
