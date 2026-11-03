@@ -53,6 +53,20 @@ psql -d ecomart -c "SELECT count(*) FROM orders"
 
 The final query should return 100,000 orders.
 
+## Query optimization
+
+The original D597 Task 1 report records how long pgAdmin took to complete three management reports before and after the indexing step. Both runs used the 100,000-order dataset. Each query returned the same number of rows in both runs.
+
+| PostgreSQL report | Rows returned | Before indexing | After indexing |
+|---|---:|---:|---:|
+| Quarterly revenue and profit | 31 | 80 ms | 73 ms |
+| Revenue and profit by region | 7 | 89 ms | 71 ms |
+| Product performance by item type | 12 | 89 ms | 76 ms |
+
+The regional report had the largest observed difference at 18 ms. Section F4 records one timing per query in each condition. Establishing a repeatable speedup would require multiple runs under comparable conditions. [Reporting queries](sql/04_queries.sql) · [Index definitions](sql/05_indexes.sql)
+
+For the product report, the coursework also explores aggregating orders by item type before joining the product names. The repository includes both a subquery and a common table expression for that approach. The MongoDB project separately covers indexes for member purchases and cosmetic product searches. [SQL aggregation examples](sql/06_optimization_examples.sql) · [MongoDB optimization examples](mongo/04_indexes_and_optimization.js)
+
 ## NoSQL Project Summary
 The MongoDB design uses document collections for cosmetics and grocery transaction data. It focuses on:
 - member loyalty analysis
