@@ -1,57 +1,14 @@
-# EcoMart Relational + NoSQL Database Design
+# EcoMart retail reporting with PostgreSQL and MongoDB
 
-## Overview
-This repo packages two database design projects built around the EcoMart scenario:
-- a PostgreSQL relational database for transactional analytics
-- a MongoDB document database for flexible product and grocery data exploration
+I designed a PostgreSQL database so EcoMart managers could compare quarterly revenue, regional profit and product performance across **100,000 sales records**. I used MongoDB for a different set of questions about member purchases and product attributes. In the coursework timing comparison, the regional profit query returned the same seven rows in **71 ms after indexing**, compared with 89 ms before.
 
-The goal was to show database design, data loading, query writing, and query optimization across both relational and non-relational systems.
+[Review the PostgreSQL reporting queries](sql/04_queries.sql) · [See the timing comparison](#query-optimization) · [Explore the MongoDB queries](mongo/03_queries.js)
 
-## Academic Context
-Completed during my M.S. in Data Analytics at Western Governors University (WGU), then packaged here as a public portfolio project.
+## Relational design
 
-## What This Repo Shows
-- normalized relational schema design in PostgreSQL
-- staging-table ETL and dimensional loading patterns
-- analytical SQL queries, indexes, CTEs, and views
-- MongoDB collection setup, import commands, aggregation queries, and indexing
+A staging table accepts the sales CSV. SQL then loads five normalized tables. Each order references a country, item type and sales channel, and each country belongs to a region. Storing those relationships once gives the three management reports a consistent definition of region and product. Reusable views expose the aggregations to reporting tools. [Schema](sql/02_schema.sql) · [Staging and load](sql/03_load_from_staging.sql) · [Reporting views](sql/07_views.sql)
 
-## Repo Structure
-- `sql/01_create_database.sql`
-- `sql/02_schema.sql`
-- `sql/03_load_from_staging.sql`
-- `sql/04_queries.sql`
-- `sql/05_indexes.sql`
-- `sql/06_optimization_examples.sql`
-- `sql/07_views.sql`
-- `mongo/01_create_collections.js`
-- `mongo/02_import_commands.sh`
-- `mongo/03_queries.js`
-- `mongo/04_indexes_and_optimization.js`
-- `data/Sales_Records.csv`
-- `data/cosmetics.json`
-- `data/groceries.json`
-- `data/README.md`
-
-## Relational Project Summary
-The PostgreSQL design models EcoMart sales activity using `Region`, `Country`, `ItemType`, `SalesChannel`, and `Orders` tables. It uses a staging table to load raw sales data and then inserts cleaned, normalized records into the production schema. The analytical layer includes:
-- quarterly revenue and profit analysis
-- region-level revenue and profit analysis
-- product performance by item type
-- query optimization with indexes, subqueries, and CTEs
-- reusable views for management reporting
-
-![EcoMart entity-relationship diagram showing the links from Orders to Country, ItemType and SalesChannel, and from Country to Region](assets/relational-schema.png)
-
-To load the supplied sales CSV, open a clean PostgreSQL database and run the following from the repository root. The second command stops on errors and rolls back its transaction if the import fails.
-
-~~~shell
-psql -v ON_ERROR_STOP=1 -d ecomart -f sql/02_schema.sql
-psql -v ON_ERROR_STOP=1 --single-transaction -d ecomart -f sql/03_load_from_staging.sql
-psql -d ecomart -c "SELECT count(*) FROM orders"
-~~~
-
-The final query should return 100,000 orders.
+![EcoMart entity-relationship diagram linking orders to country, item type and sales channel, and country to region](assets/relational-schema.png)
 
 ## Query optimization
 
@@ -67,19 +24,20 @@ The regional report had the largest observed difference at 18 ms. Section F4 rec
 
 For the product report, the coursework also explores aggregating orders by item type before joining the product names. The repository includes both a subquery and a common table expression for that approach. The MongoDB project separately covers indexes for member purchases and cosmetic product searches. [SQL aggregation examples](sql/06_optimization_examples.sql) · [MongoDB optimization examples](mongo/04_indexes_and_optimization.js)
 
-## NoSQL Project Summary
-The MongoDB design uses document collections for cosmetics and grocery transaction data. It focuses on:
-- member loyalty analysis
-- ranking versatile, high-quality cosmetics
-- ingredient-based product discovery for trend-driven marketing
-- query optimization with indexes and reduced scan patterns
+## NoSQL project
 
-## Data Notes
-- The PostgreSQL sales source file is now included as `data/Sales_Records.csv` with `100,000` transactional rows.
-- The two MongoDB JSON datasets are included in `data/`.
-- The staging-load SQL in `sql/03_load_from_staging.sql` points directly to `data/Sales_Records.csv` for a repo-local import path.
+The grocery query ranks members by purchase count. The cosmetics queries find highly rated products for combination skin and search ingredients for a marketing brief. The cosmetics index includes skin type and rank. The product query also sorts ties by name. For the ingredient search, the rank filter narrows the products to check for a substring. [Collection definitions](mongo/01_create_collections.js) · [Aggregation and search queries](mongo/03_queries.js)
 
-## Environment Notes
-- PostgreSQL was the target platform for the relational portion.
-- MongoDB shell and `mongoimport` were the target tools for the document-database portion.
-- No Python environment is required for this repo.
+## Load the data
+
+From the repository root, run these commands against an empty PostgreSQL database named `ecomart`. The second command wraps the sales import in a single transaction. The final count should be 100,000.
+
+~~~sh
+psql -v ON_ERROR_STOP=1 -d ecomart -f sql/02_schema.sql
+psql -v ON_ERROR_STOP=1 --single-transaction -d ecomart -f sql/03_load_from_staging.sql
+psql -d ecomart -c "SELECT count(*) FROM orders"
+~~~
+
+To compare timings yourself, run the three reporting queries before and after applying the index definitions. For MongoDB, the import script provides the `mongoimport` commands for both included JSON arrays. [Index definitions](sql/05_indexes.sql) · [MongoDB import commands](mongo/02_import_commands.sh) · [Dataset notes](data/README.md)
+
+*WGU M.S. in Data Analytics coursework, D597 Data Management.*
