@@ -41,6 +41,8 @@ The PostgreSQL design models EcoMart sales activity using `Region`, `Country`, `
 - query optimization with indexes, subqueries, and CTEs
 - reusable views for management reporting
 
+![EcoMart entity-relationship diagram showing the links from Orders to Country, ItemType and SalesChannel, and from Country to Region](assets/relational-schema.png)
+
 To load the supplied sales CSV, open a clean PostgreSQL database and run the following from the repository root. The second command stops on errors and rolls back its transaction if the import fails.
 
 ~~~shell
