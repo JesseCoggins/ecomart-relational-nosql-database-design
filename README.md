@@ -41,6 +41,16 @@ The PostgreSQL design models EcoMart sales activity using `Region`, `Country`, `
 - query optimization with indexes, subqueries, and CTEs
 - reusable views for management reporting
 
+To load the supplied sales CSV, open a clean PostgreSQL database and run the following from the repository root. The second command stops on errors and rolls back its transaction if the import fails.
+
+~~~shell
+psql -v ON_ERROR_STOP=1 -d ecomart -f sql/02_schema.sql
+psql -v ON_ERROR_STOP=1 --single-transaction -d ecomart -f sql/03_load_from_staging.sql
+psql -d ecomart -c "SELECT count(*) FROM orders"
+~~~
+
+The final query should return 100,000 orders.
+
 ## NoSQL Project Summary
 The MongoDB design uses document collections for cosmetics and grocery transaction data. It focuses on:
 - member loyalty analysis

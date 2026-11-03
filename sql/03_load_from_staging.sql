@@ -17,26 +17,7 @@ CREATE TABLE StagingTable (
 );
 
 -- Run this script from the repository root so the relative path below resolves correctly.
-\copy public.stagingtable (
-    region,
-    country,
-    itemtype,
-    saleschannel,
-    orderpriority,
-    orderdate,
-    orderid,
-    shipdate,
-    unitssold,
-    unitprice,
-    unitcost,
-    totalrevenue,
-    totalcost,
-    totalprofit
-) FROM 'data/Sales_Records.csv'
-DELIMITER ','
-CSV HEADER
-QUOTE '"'
-ESCAPE '''';
+\copy public.stagingtable FROM 'data/Sales_Records.csv' WITH (FORMAT csv, HEADER true)
 
 -- Verify there are no duplicate order IDs in the staging load.
 SELECT orderid, COUNT(*)
