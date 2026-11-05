@@ -32,7 +32,7 @@ I compared pgAdmin completion times for three management reports before and afte
 | Revenue and profit by region | 7 | 89 ms | 71 ms |
 | Product performance by item type | 12 | 89 ms | 76 ms |
 
-The regional report had the largest observed difference at 18 ms. The comparison contains one timing per query in each condition. Establishing a repeatable speedup would require multiple runs under comparable conditions. [Reporting queries](sql/04_queries.sql) · [Index definitions](sql/05_indexes.sql)
+The regional report had the largest observed difference at 18 ms. I timed each query once before and once after indexing. Those runs show the observed difference, but I would need repeated runs under comparable conditions to claim a repeatable speedup. [Reporting queries](sql/04_queries.sql) · [Index definitions](sql/05_indexes.sql)
 
 For the product report, I also explored aggregating orders by item type before joining the product names. The repository includes both a subquery and a common table expression for that approach. The MongoDB project separately covers indexes for member purchases and cosmetic product searches. [SQL aggregation examples](sql/06_optimization_examples.sql) · [MongoDB optimization examples](mongo/04_indexes_and_optimization.js)
 
@@ -40,7 +40,7 @@ For the product report, I also explored aggregating orders by item type before j
 
 The grocery query ranks members by purchase count. The cosmetics queries find highly rated products for combination skin and search ingredients for a marketing brief. The cosmetics index includes skin type and rank. The product query also sorts ties by name. For the ingredient search, the rank filter narrows the products to check for a substring. [Collection definitions](mongo/01_create_collections.js) · [Aggregation and search queries](mongo/03_queries.js)
 
-## Load the data
+## Run it yourself
 
 From the repository root, create `ecomart`, then load its schema and sales records. Use a PostgreSQL role with database-creation privileges. The sales import runs in a single transaction; the final count should be 100,000.
 
