@@ -20,9 +20,21 @@ The original D597 Task 1 report records how long pgAdmin took to complete three 
 | Revenue and profit by region | 7 | 89 ms | 71 ms |
 | Product performance by item type | 12 | 89 ms | 76 ms |
 
-The regional report had the largest observed difference at 18 ms. Section F4 records one timing per query in each condition. Establishing a repeatable speedup would require multiple runs under comparable conditions. [Reporting queries](sql/04_queries.sql) · [Index definitions](sql/05_indexes.sql)
+The regional report had the largest observed difference at 18 ms. The submitted comparison records one timing per query in each condition. Establishing a repeatable speedup would require multiple runs under comparable conditions. [Reporting queries](sql/04_queries.sql) · [Index definitions](sql/05_indexes.sql)
 
 For the product report, the coursework also explores aggregating orders by item type before joining the product names. The repository includes both a subquery and a common table expression for that approach. The MongoDB project separately covers indexes for member purchases and cosmetic product searches. [SQL aggregation examples](sql/06_optimization_examples.sql) · [MongoDB optimization examples](mongo/04_indexes_and_optimization.js)
+
+## Business reporting results
+
+Applying the reporting queries’ 2010–2024 date filter to the included CSV retains all 100,000 orders, dated January 2010 through July 2017. Recomputing `UnitsSold × (UnitPrice − UnitCost)` gives:
+
+| Region | Total modeled sales profit |
+|---|---:|
+| Sub-Saharan Africa | $10,306,312,642.23 |
+| Europe | $10,080,579,491.05 |
+| Asia | $5,707,511,516.76 |
+
+These are the three largest regional totals in this scenario. Managers could use the seven-region report to prioritize investigation, then compare order volume and product mix before deciding where to invest. The totals are dataset aggregations, not profit improvements caused by the database. The other reports return 31 year-quarter groups and 12 product types.
 
 ## NoSQL project
 
@@ -39,5 +51,9 @@ psql -d ecomart -c "SELECT count(*) FROM orders"
 ~~~
 
 To compare timings yourself, run the three reporting queries before and after applying the index definitions. For MongoDB, the import script provides the `mongoimport` commands for both included JSON arrays. [Index definitions](sql/05_indexes.sql) · [MongoDB import commands](mongo/02_import_commands.sh) · [Dataset notes](data/README.md)
+
+## Data and environment
+
+[Data origin and reuse notes](data/README.md). Use PostgreSQL/psql and MongoDB/mongoimport as documented above; there is no Python package setup.
 
 *WGU M.S. in Data Analytics coursework, D597 Data Management.*

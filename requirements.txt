@@ -1,2 +1,0 @@
-# No Python package dependencies are required for this repo.
-# The extracted work targets PostgreSQL and MongoDB tooling directly.
