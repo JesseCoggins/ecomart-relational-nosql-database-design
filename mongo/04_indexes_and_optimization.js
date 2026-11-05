@@ -1,4 +1,4 @@
-use("D597Task2");
+use("ecomart");
 
 // Query 1 optimization
 db.groceries.createIndex({ Member_number: 1 });

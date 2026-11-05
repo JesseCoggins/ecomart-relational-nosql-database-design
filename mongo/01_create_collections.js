@@ -1,4 +1,4 @@
-use("D597Task2");
+use("ecomart");
 
 db.createCollection("cosmetics");
 db.createCollection("groceries");

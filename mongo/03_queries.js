@@ -1,4 +1,4 @@
-use("D597Task2");
+use("ecomart");
 
 // Business question: Which grocery members make purchases most frequently?
 // 1. Member loyalty analysis: customers with the most purchases
