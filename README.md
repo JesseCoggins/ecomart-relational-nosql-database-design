@@ -38,7 +38,9 @@ For the product report, I also explored aggregating orders by item type before j
 
 ## NoSQL project
 
-The grocery query ranks members by purchase count. The cosmetics queries find highly rated products for combination skin and search ingredients for a marketing brief. The cosmetics index includes skin type and rank. The product query also sorts ties by name. For the ingredient search, the rank filter narrows the products to check for a substring. [Collection definitions](mongo/01_create_collections.js) · [Aggregation and search queries](mongo/03_queries.js)
+The grocery query ranks members by recorded item purchases. Each document is an item row, so `recordedItemCount` does not count shopping visits. For example, member 3180 has 36 item rows across 10 recorded dates. A visit-frequency analysis would need a separate member/date grouping; dates are only a proxy because the file has no basket identifier.
+
+The cosmetics queries find highly rated products for combination skin and search ingredients for a marketing brief. The ingredient query returns 772 products containing Butylene Glycol, ordered by rating and name. Its equivalent example preserves that result set. A separately labeled business variant requires `Rank >= 4` and returns 574 products; that filter changes the question. The cosmetics index includes skin type and rank, while an unanchored ingredient-substring search can still require scanning text. [Collection definitions](mongo/01_create_collections.js) · [Aggregation and search queries](mongo/03_queries.js)
 
 ## Run it yourself
 
